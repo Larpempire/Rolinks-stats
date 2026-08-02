@@ -24,7 +24,7 @@ const OWNER_ID = "1464634211406188721";
 const TICKET_CATEGORY = "1531135804531937374";
 const WELCOME_CHANNEL_ID = "1531135804531937372";
 const SUPPORT_ROLES = ["1533451967316361416", "1533451898831507587"];
-const PROTECTED_MESSAGE_ID = "1532445196774543441";
+const PROTECTED_MESSAGE_ID = "1533457586593075331";
 
 // ================= BANNERS (BOTTOM ONLY) =================
 const BANNER_BOTTOM = "https://i.imgur.com/wUkd2XE.gif";
@@ -183,7 +183,7 @@ client.on("messageCreate", async (message) => {
         .setTitle("Successfully purged")
         .setDescription(`Deleted ${deleted.size} messages`)
         .setImage(getRandomPurge())
-        .setFooter({ text: "𝔏𝔞𝔯𝔭 𝔢𝔪𝔭𝔦𝔯𝔢 • Purge" });
+        .setFooter({ text: "Rolinks • Purge" });
       await message.channel.send({ embeds: [embed] });
     } catch (e) {
       message.reply("Purge failed.").catch(() => null);
@@ -434,7 +434,7 @@ client.on("interactionCreate", async (interaction) => {
 setInterval(async () => {
   try {
     for (const guild of client.guilds.cache.values()) {
-      for (const channelId of ["1525971262285807761"]) {
+      for (const channelId of ["1531135805009957049"]) {
         const channel = guild.channels.cache.get(channelId);
         if (channel?.isTextBased()) {
           const fetched = await channel.messages.fetch({ limit: 50 }).catch(() => null);
