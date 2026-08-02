@@ -20,18 +20,31 @@ const client = new Client({
 });
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
-const OWNER_ID = "1389763251042258944";
-const TICKET_CATEGORY = "1525971261807923321";
-const WELCOME_CHANNEL_ID = "1525971261807923324";
+const OWNER_ID = "1464634211406188721";
+const TICKET_CATEGORY = "1531135804531937374";
+const WELCOME_CHANNEL_ID = "1531135804531937372";
 
-const SUPPORT_ROLES = ["1525971260943892518", "1525971260943892517"];
+const SUPPORT_ROLES = ["1533451967316361416", "1533451898831507587"];
 
 // ================= PROTECTED !help MESSAGE =================
 const PROTECTED_MESSAGE_ID = "1532445196774543441";
 
 // ================= BANNERE =================
-const BANNER_TOP = "https://i.imgur.com/hw4rH89.jpeg";
-const BANNER_BOTTOM = "https://i.pinimg.com/originals/d8/53/9c/d8539cf70a1c62c7b6c55d11b14b6334.gif";
+const BANNER_BOTTOM = "{
+  "name": "Rolinks-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "node-fetch": "^2.7.0",
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5"
+  }
+}";
+const BANNER_BOTTOM = "https://i.imgur.com/wUkd2XE.gif";
 const STATS_GIF = "https://cdn.discordapp.com/attachments/1017600005764284497/1415662667720556587/Tumblr_l_76198603461233.gif?ex=6a6c8919&is=6a6b3799&hm=0439197b534cd600254f94be2b13b6e22219355f123f60d2ee50a7c988114642";
 const PURGE_BANNERS = ["https://i.imgur.com/dTgmP6g.gif", "https://i.imgur.com/pd1yzwU.gif", "https://i.imgur.com/3i5dler.gif"];
 const FUCK_GIFS = ["https://cdn.hentaigifz.com/84966/bounce-bounce.gif", "https://cdn.hentaigifz.com/88822/mankitsu-happening.gif"];
@@ -114,7 +127,7 @@ client.on("messageCreate", async (message) => {
 
       const embedTop = new EmbedBuilder()
         .setColor(0x000000)
-        .setImage(BANNER_TOP);
+        .setImage(BANNER_BOTTOM);
 
       const embed = new EmbedBuilder()
         .setColor(0x000000)
@@ -129,12 +142,12 @@ client.on("messageCreate", async (message) => {
           `<:emoji_18:1532377873430614268>**TOTAL HIT STATS**\n` +
           `\`\`\`Summary:  ${formatNumber(totalSummary)}\nRAP:      ${formatNumber(totalRap)}\nRobux:    ${formatNumber(totalRobux)}\`\`\``
         )
-        .setImage(STATS_GIF);
+        .setImage();
 
       const embedBottom = new EmbedBuilder()
         .setColor(0x000000)
         .setImage(BANNER_BOTTOM)
-        .setFooter({ text: `𝔏𝔞𝔯𝔭 𝔢𝔪𝔭𝔦𝔯𝔢 • Requested by ${message.author.username}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) });
+        .setFooter({ text: `Rolinks • Requested by ${message.author.username}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) });
 
       await message.channel.send({
         embeds: [embedTop, embed, embedBottom],
@@ -204,13 +217,13 @@ client.on("messageCreate", async (message) => {
   if (message.content.startsWith("!create_ticket_panel") && message.author.id === OWNER_ID) {
     const embedTop = new EmbedBuilder()
       .setColor(0x000000)
-      .setImage(BANNER_TOP);
+      .setImage(BANNER_BOTTOM);
 
     const embedMain = new EmbedBuilder()
       .setColor(0x000000)
       .setTitle(`—— <a:emoji_31:1532377239071756378>ꜱᴜᴘᴘᴏʀᴛ  ——`)
       .setDescription(`<a:emoji_30:1532377209434542320>ᴘʟᴇᴀꜱᴇ ᴄʜᴏᴏꜱᴇ ᴀ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴅᴇᴘᴇɴᴅɪɴɢ ᴏɴ ᴡʜᴀᴛ ᴛʏᴘᴇ ᴏꜰ ɪꜱꜱᴜᴇ ʏᴏᴜʀ ᴅᴇᴀʟɪɴɢ ᴡɪᴛʜ`)
-      .setImage(STATS_GIF);
+      .setImage();
 
     const selectMenu = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
@@ -293,7 +306,7 @@ client.on("guildMemberAdd", async (member) => {
     // Normal message with single blue tag + text outside embeds
     const welcomeMain = new EmbedBuilder()
       .setColor(0x000000)
-      .setTitle(`<a:emoji_31:1532377239071756378> Welcome to larp empire!!`)
+      .setTitle(`<a:emoji_31:1532377239071756378> Welcome to Rolinks!!`)
       .setDescription(
         `Read\n` +
         `<#1525971261807923322>\n\n` +
@@ -314,13 +327,13 @@ client.on("guildMemberAdd", async (member) => {
     });
 
     // DM (unchanged)
-    const dmTop = new EmbedBuilder().setColor(0x000000).setImage(BANNER_TOP);
+    const dmTop = new EmbedBuilder().setColor(0x000000).setImage(BANNER_BOTTOM);
     const dmMain = new EmbedBuilder()
       .setColor(0x000000)
       .setDescription(
         `Hi! ${member.user.username}\n\n` +
         `If you come from another generator u might be dualhooked!\n\n` +
-        `If your beams don’t say \`larp empire\`\n\n` +
+        `If your beams don’t say \`Rolinks\`\n\n` +
         `Go to the channel cmds and use the \`!unhook\` command!!`
       )
       .setImage(STATS_GIF);
@@ -365,11 +378,11 @@ client.on("interactionCreate", async (interaction) => {
         `Please describe what type of issue you have.\n` +
         `Staff will be with you shortly.`
       )
-      .setImage(STATS_GIF);
+      .setImage(BANNER_BOTTOM);
 
     const ticketBottom = new EmbedBuilder()
       .setColor(0x000000)
-      .setImage(BANNER_BOTTOM);
+      .setImage();
 
     const closeButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
