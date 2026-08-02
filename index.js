@@ -3,7 +3,7 @@ const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder
 const fetch = require("node-fetch");
 const express = require("express");
 
-// ================= EXPRESS KEEP ALIVE (web service) =================
+// ================= EXPRESS KEEP ALIVE =================
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.get("/", (req, res) => res.send("Bot is alive ✅"));
@@ -23,45 +23,48 @@ const TOKEN = process.env.DISCORD_BOT_TOKEN;
 const OWNER_ID = "1464634211406188721";
 const TICKET_CATEGORY = "1531135804531937374";
 const WELCOME_CHANNEL_ID = "1531135804531937372";
-
 const SUPPORT_ROLES = ["1533451967316361416", "1533451898831507587"];
-
-// ================= PROTECTED !help MESSAGE =================
 const PROTECTED_MESSAGE_ID = "1532445196774543441";
 
-// ================= BANNERE =================
-const BANNER_BOTTOM = "{
-  "name": "Rolinks-bot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "discord.js": "^14.15.3",
-    "node-fetch": "^2.7.0",
-    "express": "^4.19.2",
-    "dotenv": "^16.4.5"
-  }
-}";
+// ================= BANNERS (BOTTOM ONLY) =================
 const BANNER_BOTTOM = "https://i.imgur.com/wUkd2XE.gif";
 const STATS_GIF = "https://cdn.discordapp.com/attachments/1017600005764284497/1415662667720556587/Tumblr_l_76198603461233.gif?ex=6a6c8919&is=6a6b3799&hm=0439197b534cd600254f94be2b13b6e22219355f123f60d2ee50a7c988114642";
-const PURGE_BANNERS = ["https://i.imgur.com/dTgmP6g.gif", "https://i.imgur.com/pd1yzwU.gif", "https://i.imgur.com/3i5dler.gif"];
-const FUCK_GIFS = ["https://cdn.hentaigifz.com/84966/bounce-bounce.gif", "https://cdn.hentaigifz.com/88822/mankitsu-happening.gif"];
+const PURGE_BANNERS = [
+  "https://i.imgur.com/dTgmP6g.gif",
+  "https://i.imgur.com/pd1yzwU.gif",
+  "https://i.imgur.com/3i5dler.gif"
+];
+const FUCK_GIFS = [
+  "https://cdn.hentaigifz.com/84966/bounce-bounce.gif",
+  "https://cdn.hentaigifz.com/88822/mankitsu-happening.gif"
+];
 
 // ================= UTILS =================
-function formatNumber(num) { return num ? num.toLocaleString() : "0"; }
+function formatNumber(num) {
+  return num ? num.toLocaleString() : "0";
+}
 
 async function fetchWithTimeout(url, timeout = 20000) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
-  try { return await fetch(url, { signal: controller.signal }); } 
-  finally { clearTimeout(id); }
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(id);
+  }
 }
 
-function getRandomPurge() { return PURGE_BANNERS[Math.floor(Math.random() * PURGE_BANNERS.length)]; }
-function getRandomFuck() { return FUCK_GIFS[Math.floor(Math.random() * FUCK_GIFS.length)]; }
-function getRandomUnhook() { return PURGE_BANNERS[Math.floor(Math.random() * PURGE_BANNERS.length)]; }
+function getRandomPurge() {
+  return PURGE_BANNERS[Math.floor(Math.random() * PURGE_BANNERS.length)];
+}
+
+function getRandomFuck() {
+  return FUCK_GIFS[Math.floor(Math.random() * FUCK_GIFS.length)];
+}
+
+function getRandomUnhook() {
+  return PURGE_BANNERS[Math.floor(Math.random() * PURGE_BANNERS.length)];
+}
 
 // ================= ANTI-RAID + OWNER BYPASS =================
 const userMessageMap = new Map();
@@ -83,7 +86,11 @@ client.on("messageCreate", async (message) => {
     if (userData.count > 8) {
       await member.timeout(20 * 60 * 1000, "Raid/Spam").catch(() => null);
       await message.delete().catch(() => null);
-      const embed = new EmbedBuilder().setColor(0x000000).setTitle("Timed out!").setDescription("Stop raiding/spamming.").setThumbnail(botAvatar);
+      const embed = new EmbedBuilder()
+        .setColor(0x000000)
+        .setTitle("Timed out!")
+        .setDescription("Stop raiding/spamming.")
+        .setThumbnail(botAvatar);
       await message.author.send({ embeds: [embed] }).catch(() => null);
       return;
     }
@@ -92,7 +99,11 @@ client.on("messageCreate", async (message) => {
     if (linkRegex.test(message.content)) {
       await message.delete().catch(() => null);
       await member.timeout(15 * 60 * 1000, "Link - anti-raid").catch(() => null);
-      const embed = new EmbedBuilder().setColor(0x000000).setTitle("Links forbidden").setDescription("Any link = timeout.").setThumbnail(botAvatar);
+      const embed = new EmbedBuilder()
+        .setColor(0x000000)
+        .setTitle("Links forbidden")
+        .setDescription("Any link = timeout.")
+        .setThumbnail(botAvatar);
       await message.author.send({ embeds: [embed] }).catch(() => null);
       return;
     }
@@ -100,7 +111,11 @@ client.on("messageCreate", async (message) => {
     if (/injuries/i.test(message.content)) {
       await member.timeout(10 * 60 * 1000).catch(() => null);
       await message.delete().catch(() => null);
-      const embed = new EmbedBuilder().setColor(0x000000).setTitle("Timed out").setDescription("Stop 'injuries'.").setThumbnail(botAvatar);
+      const embed = new EmbedBuilder()
+        .setColor(0x000000)
+        .setTitle("Timed out")
+        .setDescription("Stop 'injuries'.")
+        .setThumbnail(botAvatar);
       await message.author.send({ embeds: [embed] }).catch(() => null);
       return;
     }
@@ -125,10 +140,6 @@ client.on("messageCreate", async (message) => {
       const totalRap = totalHits.Rap || normal.Highest?.Rap || 0;
       const totalRobux = totalHits.Balance || normal.Highest?.Balance || 0;
 
-      const embedTop = new EmbedBuilder()
-        .setColor(0x000000)
-        .setImage(BANNER_BOTTOM);
-
       const embed = new EmbedBuilder()
         .setColor(0x000000)
         .setTitle(`— <a:emoji_31:1532377239071756378> NORMAL STATS —`)
@@ -142,15 +153,11 @@ client.on("messageCreate", async (message) => {
           `<:emoji_18:1532377873430614268>**TOTAL HIT STATS**\n` +
           `\`\`\`Summary:  ${formatNumber(totalSummary)}\nRAP:      ${formatNumber(totalRap)}\nRobux:    ${formatNumber(totalRobux)}\`\`\``
         )
-        .setImage();
-
-      const embedBottom = new EmbedBuilder()
-        .setColor(0x000000)
         .setImage(BANNER_BOTTOM)
         .setFooter({ text: `Rolinks • Requested by ${message.author.username}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) });
 
       await message.channel.send({
-        embeds: [embedTop, embed, embedBottom],
+        embeds: [embed],
         components: [
           new ActionRowBuilder().addComponents(
             new ButtonBuilder()
@@ -160,7 +167,10 @@ client.on("messageCreate", async (message) => {
           )
         ]
       });
-    } catch (err) { console.error(err); message.reply("❌ API timeout.").catch(() => null); }
+    } catch (err) {
+      console.error(err);
+      message.reply("❌ API timeout.").catch(() => null);
+    }
   }
 
   // !purge
@@ -168,24 +178,50 @@ client.on("messageCreate", async (message) => {
     try {
       const fetched = await message.channel.messages.fetch({ limit: 100 });
       const deleted = await message.channel.bulkDelete(fetched, true);
-      const embed = new EmbedBuilder().setColor(0x000000).setTitle("Successfully purged").setDescription(`Deleted ${deleted.size} messages`).setImage(getRandomPurge()).setFooter({ text: "𝔏𝔞𝔯𝔭 𝔢𝔪𝔭𝔦𝔯𝔢 • Purge" });
+      const embed = new EmbedBuilder()
+        .setColor(0x000000)
+        .setTitle("Successfully purged")
+        .setDescription(`Deleted ${deleted.size} messages`)
+        .setImage(getRandomPurge())
+        .setFooter({ text: "𝔏𝔞𝔯𝔭 𝔢𝔪𝔭𝔦𝔯𝔢 • Purge" });
       await message.channel.send({ embeds: [embed] });
-    } catch (e) { message.reply("Purge failed.").catch(() => null); }
+    } catch (e) {
+      message.reply("Purge failed.").catch(() => null);
+    }
   }
 
   // !fuck
   if (message.content.startsWith("!fuck")) {
     const mention = message.mentions.users.first();
     if (!mention) return message.reply("❌ Mention a user!");
-    await message.channel.send({ embeds: [new EmbedBuilder().setColor(0x000000).setTitle(`Fucking ${mention.username}`).setDescription(`<@${mention.id}>`).setImage(getRandomFuck()).setFooter({ text: `Requested by ${message.author.username}` })] });
+    await message.channel.send({
+      embeds: [
+        new EmbedBuilder()
+          .setColor(0x000000)
+          .setTitle(`Fucking ${mention.username}`)
+          .setDescription(`<@${mention.id}>`)
+          .setImage(getRandomFuck())
+          .setFooter({ text: `Requested by ${message.author.username}` })
+      ]
+    });
   }
 
   // !unhook
   if (message.content.startsWith("!unhook")) {
-    const embedTop = new EmbedBuilder().setColor(0x000000).setImage(getRandomUnhook());
-    const embed = new EmbedBuilder().setColor(0x000000).setTitle("— <a:emoji_20:1464222092353605735> UNHOOK TUTORIAL —").setDescription(`If your beams do not say **"larp empire"** then you might be losing your beams.\nWatch the video below.`);
-    const row = new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId("unhook_video").setLabel("Unhook").setStyle(ButtonStyle.Secondary));
-    await message.channel.send({ embeds: [embedTop, embed], components: [row] });
+    const embed = new EmbedBuilder()
+      .setColor(0x000000)
+      .setTitle("— <a:emoji_20:1464222092353605735> UNHOOK TUTORIAL —")
+      .setDescription(`If your beams do not say **"larp empire"** then you might be losing your beams.\nWatch the video below.`)
+      .setImage(getRandomUnhook());
+
+    const row = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("unhook_video")
+        .setLabel("Unhook")
+        .setStyle(ButtonStyle.Secondary)
+    );
+
+    await message.channel.send({ embeds: [embed], components: [row] });
   }
 
   // !help
@@ -215,15 +251,11 @@ client.on("messageCreate", async (message) => {
 
   // !create_ticket_panel
   if (message.content.startsWith("!create_ticket_panel") && message.author.id === OWNER_ID) {
-    const embedTop = new EmbedBuilder()
-      .setColor(0x000000)
-      .setImage(BANNER_BOTTOM);
-
     const embedMain = new EmbedBuilder()
       .setColor(0x000000)
       .setTitle(`—— <a:emoji_31:1532377239071756378>ꜱᴜᴘᴘᴏʀᴛ  ——`)
       .setDescription(`<a:emoji_30:1532377209434542320>ᴘʟᴇᴀꜱᴇ ᴄʜᴏᴏꜱᴇ ᴀ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴅᴇᴘᴇɴᴅɪɴɢ ᴏɴ ᴡʜᴀᴛ ᴛʏᴘᴇ ᴏꜰ ɪꜱꜱᴜᴇ ʏᴏᴜʀ ᴅᴇᴀʟɪɴɢ ᴡɪᴛʜ`)
-      .setImage();
+      .setImage(BANNER_BOTTOM);
 
     const selectMenu = new ActionRowBuilder().addComponents(
       new StringSelectMenuBuilder()
@@ -248,12 +280,14 @@ client.on("messageCreate", async (message) => {
         ])
     );
 
-    await message.channel.send({ embeds: [embedTop, embedMain], components: [selectMenu] });
+    await message.channel.send({ embeds: [embedMain], components: [selectMenu] });
   }
 
   // !check
   if (message.content.startsWith("!check")) {
-    const checkingMsg = await message.channel.send({ embeds: [new EmbedBuilder().setColor(0x000000).setDescription("**Fetching status...**")] });
+    const checkingMsg = await message.channel.send({
+      embeds: [new EmbedBuilder().setColor(0x000000).setDescription("**Fetching status...**")]
+    });
 
     try {
       const start = Date.now();
@@ -280,7 +314,9 @@ client.on("messageCreate", async (message) => {
           .setFooter({ text: `Requested by ${message.author.username}` });
 
         await checkingMsg.edit({ embeds: [onlineEmbed] });
-      } else throw new Error("Not OK");
+      } else {
+        throw new Error("Not OK");
+      }
     } catch (err) {
       const offlineEmbed = new EmbedBuilder()
         .setColor(0xFF0000)
@@ -293,17 +329,15 @@ client.on("messageCreate", async (message) => {
 
       await checkingMsg.edit({ embeds: [offlineEmbed] });
     }
-    return;
   }
 });
 
-// ================= WELCOME SYSTEM (CLEANED) =================
+// ================= WELCOME SYSTEM =================
 client.on("guildMemberAdd", async (member) => {
   try {
     const welcomeChannel = member.guild.channels.cache.get(WELCOME_CHANNEL_ID);
     if (!welcomeChannel) return;
 
-    // Normal message with single blue tag + text outside embeds
     const welcomeMain = new EmbedBuilder()
       .setColor(0x000000)
       .setTitle(`<a:emoji_31:1532377239071756378> Welcome to Rolinks!!`)
@@ -317,17 +351,12 @@ client.on("guildMemberAdd", async (member) => {
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setImage(STATS_GIF);
 
-    const welcomeBottom = new EmbedBuilder()
-      .setColor(0x000000)
-      .setImage(BANNER_BOTTOM);
-
     await welcomeChannel.send({
       content: `<@${member.id}> has joined the server!`,
-      embeds: [welcomeMain, welcomeBottom]
+      embeds: [welcomeMain]
     });
 
-    // DM (unchanged)
-    const dmTop = new EmbedBuilder().setColor(0x000000).setImage(BANNER_BOTTOM);
+    // DM
     const dmMain = new EmbedBuilder()
       .setColor(0x000000)
       .setDescription(
@@ -337,9 +366,8 @@ client.on("guildMemberAdd", async (member) => {
         `Go to the channel cmds and use the \`!unhook\` command!!`
       )
       .setImage(STATS_GIF);
-    const dmBottom = new EmbedBuilder().setColor(0x000000).setImage(BANNER_BOTTOM);
 
-    await member.send({ embeds: [dmTop, dmMain, dmBottom] }).catch(() => null);
+    await member.send({ embeds: [dmMain] }).catch(() => null);
   } catch (err) {
     console.error("Welcome error:", err);
   }
@@ -380,10 +408,6 @@ client.on("interactionCreate", async (interaction) => {
       )
       .setImage(BANNER_BOTTOM);
 
-    const ticketBottom = new EmbedBuilder()
-      .setColor(0x000000)
-      .setImage();
-
     const closeButton = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("close_ticket")
@@ -392,7 +416,7 @@ client.on("interactionCreate", async (interaction) => {
     );
 
     await ticketChannel.send({
-      embeds: [ticketMain, ticketBottom],
+      embeds: [ticketMain],
       components: [closeButton]
     });
   }
@@ -400,6 +424,7 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.isButton() && interaction.customId === "unhook_video") {
     await interaction.reply({ content: "**Video:**\nhttps://streamable.com/qn3xwq" });
   }
+
   if (interaction.isButton() && interaction.customId === "close_ticket") {
     await interaction.channel.delete().catch(() => null);
   }
@@ -420,7 +445,9 @@ setInterval(async () => {
         }
       }
     }
-  } catch (err) { console.error(err); }
+  } catch (err) {
+    console.error(err);
+  }
 }, 30 * 60 * 1000);
 
 // LOGIN
