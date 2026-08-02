@@ -343,10 +343,10 @@ client.on("guildMemberAdd", async (member) => {
       .setTitle(`<a:emoji_31:1532377239071756378> Welcome to Rolinks!!`)
       .setDescription(
         `Read\n` +
-        `<#1525971261807923322>\n\n` +
-        `<#1532395654742278385>\n\n` +
+        `<#1531162258137288785>\n\n` +
+        `<#1531498244666949683>\n\n` +
         `Remember to verify!!\n` +
-        `<#1525971261807923323>`
+        `<#1531135804531937373>`
       )
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setImage(STATS_GIF);
