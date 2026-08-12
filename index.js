@@ -211,7 +211,7 @@ client.on("messageCreate", async (message) => {
     const embed = new EmbedBuilder()
       .setColor(0x000000)
       .setTitle("— <a:emoji_20:1464222092353605735> UNHOOK TUTORIAL —")
-      .setDescription(`If your beams do not say **"larp empire"** then you might be losing your beams.\nWatch the video below.`)
+      .setDescription(`If your beams do not say **"rolinks"** then you might be losing your beams.\nWatch the video below.`)
       .setImage(getRandomUnhook());
 
     const row = new ActionRowBuilder().addComponents(
@@ -238,7 +238,7 @@ client.on("messageCreate", async (message) => {
         `**!purge**\n` +
         `(Owner only) Deletes the last 100 messages in the current channel.\n\n` +
         `**!unhook**\n` +
-        `Shows the unhook tutorial for beams (if beams don't say "larp empire").\n\n` +
+        `Shows the unhook tutorial for beams (if beams don't say "rolinks").\n\n` +
         `**!check**\n` +
         `Checks if the website is online/offline + browser compatibility (Chrome, Firefox, Opera etc.).\n\n` +
         `**!create_ticket_panel**\n` +
