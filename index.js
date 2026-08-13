@@ -416,6 +416,7 @@ client.on("interactionCreate", async (interaction) => {
     );
 
     await ticketChannel.send({
+      content: `<@&1533451898831507587> <@&1533451967316361416>`,
       embeds: [ticketMain],
       components: [closeButton]
     });
